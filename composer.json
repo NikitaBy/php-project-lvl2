@@ -1,0 +1,19 @@
+{
+    "name": "hexlet/code",
+    "description": "todo",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nikita Ivaschenko",
+            "email": "nik007.by@gmail.com"
+        }
+    ],
+    "require": {
+        "docopt/docopt": "^1.0",
+        "ext-json": "*"
+    }
+    ,
+    "require-dev": {
+        "roave/security-advisories": "dev-latest"
+    }
+}
