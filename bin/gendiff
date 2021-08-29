@@ -2,13 +2,15 @@
 
 <?php
 
-$autoloadPath1 = __DIR__ . '/../../../../autoload.php';
+$autoloadPath1 = __DIR__.'/../../../../autoload.php';
 $autoloadPath2 = __DIR__.'/../vendor/autoload.php';
 if (file_exists($autoloadPath1)) {
     require_once $autoloadPath1;
 } else {
     require_once $autoloadPath2;
 }
+
+use function DiffGenerator\DiffGenerator\gendiff;
 
 //gendiff -h
 $doc = <<<DOC
@@ -25,8 +27,12 @@ Options:
   --format <fmt>                Report format [default: stylish]
 DOC;
 
-$args = Docopt::handle($doc, ['version'=>'1.0']);
+$args = Docopt::handle($doc, ['version' => '1.0']);
 
-foreach ($args as $k=>$v) {
-    echo $k.': '.json_encode($v).PHP_EOL;
+
+$firstFilePath = $args['<firstFile>'] ?? null;
+$secondFilePath = $args['<secondFile>'] ?? null;
+
+if ($firstFilePath && $secondFilePath) {
+    gendiff($firstFilePath, $secondFilePath);
 }

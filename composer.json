@@ -15,5 +15,13 @@
     ,
     "require-dev": {
         "roave/security-advisories": "dev-latest"
+    },
+    "bin": [
+        "bin/gendiff"
+    ],
+    "autoload": {
+        "files": [
+            "src/DiffGenerator.php"
+        ]
     }
 }
