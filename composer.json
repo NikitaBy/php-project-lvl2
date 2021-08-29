@@ -1,6 +1,6 @@
 {
     "name": "hexlet/code",
-    "description": "todo",
+    "description": "Hexlet project 2",
     "license": "MIT",
     "authors": [
         {
@@ -10,7 +10,8 @@
     ],
     "require": {
         "docopt/docopt": "^1.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "squizlabs/php_codesniffer": "^3.6"
     }
     ,
     "require-dev": {

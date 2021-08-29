@@ -7,10 +7,10 @@ function gendiff($firstFilePath, $secondFilePath)
     try {
         $firstJson = file_exists($firstFilePath)
             ? json_decode(file_get_contents($firstFilePath), true)
-            : json_decode(file_get_contents(__DIR__.'/../'.$firstFilePath), true);
+            : json_decode(file_get_contents(__DIR__ . '/../' . $firstFilePath), true);
         $secondJson = file_exists($secondFilePath)
             ? json_decode(file_get_contents($secondFilePath), true)
-            : json_decode(file_get_contents(__DIR__.'/../'.$secondFilePath), true);
+            : json_decode(file_get_contents(__DIR__ . '/../' . $secondFilePath), true);
     } catch (\JsonException $e) {
         print_r($e->getMessage());
 
