@@ -2,8 +2,11 @@
 
 namespace DiffGenerator\DiffGenerator;
 
-function gendiff($firstFilePath, $secondFilePath)
+use PHPUnit\Exception;
+
+function genDiff($firstFilePath, $secondFilePath)
 {
+    //TODO bullshit
     try {
         $firstJson = file_exists($firstFilePath)
             ? json_decode(file_get_contents($firstFilePath), true)
@@ -11,10 +14,8 @@ function gendiff($firstFilePath, $secondFilePath)
         $secondJson = file_exists($secondFilePath)
             ? json_decode(file_get_contents($secondFilePath), true)
             : json_decode(file_get_contents(__DIR__ . '/../' . $secondFilePath), true);
-    } catch (\JsonException $e) {
-        print_r($e->getMessage());
-
-        return;
+    } catch (Exception $e) {
+        throw new \InvalidArgumentException('something went wrong :(');
     }
 
     $result = [];
@@ -54,7 +55,8 @@ function gendiff($firstFilePath, $secondFilePath)
 function valueToString($value): ?string
 {
     if (is_string($value)) {
-        return sprintf('"%s"', $value);
+//        return sprintf('%s', $value);
+        return $value;
     }
 
     return var_export($value, true);

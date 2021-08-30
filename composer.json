@@ -15,7 +15,8 @@
     }
     ,
     "require-dev": {
-        "roave/security-advisories": "dev-latest"
+        "roave/security-advisories": "dev-latest",
+        "phpunit/phpunit": "^8.5"
     },
     "bin": [
         "bin/gendiff"

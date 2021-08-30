@@ -10,7 +10,7 @@ if (file_exists($autoloadPath1)) {
     require_once $autoloadPath2;
 }
 
-use function DiffGenerator\DiffGenerator\gendiff;
+use function DiffGenerator\DiffGenerator\genDiff;
 
 //gendiff -h
 $doc = <<<DOC
@@ -34,5 +34,5 @@ $firstFilePath = $args['<firstFile>'] ?? null;
 $secondFilePath = $args['<secondFile>'] ?? null;
 
 if ($firstFilePath && $secondFilePath) {
-    gendiff($firstFilePath, $secondFilePath);
+    genDiff($firstFilePath, $secondFilePath);
 }
