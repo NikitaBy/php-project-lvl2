@@ -2,20 +2,39 @@
 
 namespace DiffGenerator\DiffGenerator;
 
-use PHPUnit\Exception;
+const INVALID_FILE_MESSAGE = '%s is invalid';
+const INVALID_PATH_MESSAGE = "%s doesn't exists.";
 
+function actualizePath($path)
+{
+    if (file_exists($path)) {
+        return $path;
+    }
+
+    $path = sprintf('%s/../s'.__DIR__, $path);
+
+    return file_exists($path) ? $path : null;
+}
+
+/**
+ * @throws \Exception
+ */
 function genDiff($firstFilePath, $secondFilePath)
 {
-    //TODO bullshit
-    try {
-        $firstJson = file_exists($firstFilePath)
-            ? json_decode(file_get_contents($firstFilePath), true)
-            : json_decode(file_get_contents(__DIR__ . '/../' . $firstFilePath), true);
-        $secondJson = file_exists($secondFilePath)
-            ? json_decode(file_get_contents($secondFilePath), true)
-            : json_decode(file_get_contents(__DIR__ . '/../' . $secondFilePath), true);
-    } catch (Exception $e) {
-        throw new \InvalidArgumentException('something went wrong :(');
+    if (!$firstActualPath = actualizePath($firstFilePath)) {
+        throw new \Exception(sprintf(INVALID_PATH_MESSAGE, $firstFilePath));
+    }
+
+    if (!$secondActualPath = actualizePath($secondFilePath)) {
+        throw new \Exception(sprintf(INVALID_PATH_MESSAGE, $secondFilePath));
+    }
+
+    if (!$firstJson = json_decode(file_get_contents($firstActualPath), true)) {
+        throw new \Exception(sprintf(INVALID_FILE_MESSAGE, $firstFilePath));
+    }
+
+    if (!$secondJson = json_decode(file_get_contents($secondActualPath), true)) {
+        throw new \Exception(sprintf(INVALID_FILE_MESSAGE, $secondFilePath));
     }
 
     $result = [];
@@ -54,10 +73,5 @@ function genDiff($firstFilePath, $secondFilePath)
 
 function valueToString($value): ?string
 {
-    if (is_string($value)) {
-//        return sprintf('%s', $value);
-        return $value;
-    }
-
-    return var_export($value, true);
+    return is_string($value) ? $value : var_export($value, true);
 }

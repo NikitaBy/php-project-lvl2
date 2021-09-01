@@ -1,4 +1,4 @@
-name: my-jobs
+name: hexlet-test
 
 on:
   push:
@@ -31,6 +31,9 @@ jobs:
     
     - name: Linter
       run: make lint
+
+    - name: Tests
+      run: make test
 
     # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
     # Docs: https://getcomposer.org/doc/articles/scripts.md
