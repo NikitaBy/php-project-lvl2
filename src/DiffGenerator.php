@@ -11,7 +11,7 @@ function actualizePath($path)
         return $path;
     }
 
-    $path = sprintf('%s/../s'.__DIR__, $path);
+    $path = sprintf('%s/../%s', __DIR__, $path);
 
     return file_exists($path) ? $path : null;
 }
