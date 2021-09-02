@@ -16,8 +16,7 @@
     ,
     "require-dev": {
         "roave/security-advisories": "dev-latest",
-        "phpunit/phpunit": "^8.5",
-        "codeclimate/php-test-reporter": "^0.4.4"
+        "phpunit/phpunit": "^8.5"
     },
     "bin": [
         "bin/gendiff"
