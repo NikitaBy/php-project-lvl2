@@ -5,7 +5,7 @@ namespace DiffGenerator\DiffGenerator;
 const INVALID_FILE_MESSAGE = '%s is invalid';
 const INVALID_PATH_MESSAGE = "%s doesn't exists.";
 
-function actualizePath($path)
+function actualizePath(string $path): ?string
 {
     if (file_exists($path)) {
         return $path;
@@ -19,7 +19,7 @@ function actualizePath($path)
 /**
  * @throws \Exception
  */
-function genDiff($firstFilePath, $secondFilePath)
+function genDiff(string $firstFilePath, string $secondFilePath): void
 {
     if (!$firstActualPath = actualizePath($firstFilePath)) {
         throw new \Exception(sprintf(INVALID_PATH_MESSAGE, $firstFilePath));
@@ -29,11 +29,13 @@ function genDiff($firstFilePath, $secondFilePath)
         throw new \Exception(sprintf(INVALID_PATH_MESSAGE, $secondFilePath));
     }
 
-    if (!$firstJson = json_decode(file_get_contents($firstActualPath), true)) {
+    $firstContent = file_get_contents($firstActualPath);
+    if (!$firstContent || !$firstJson = json_decode($firstContent, true)) {
         throw new \Exception(sprintf(INVALID_FILE_MESSAGE, $firstFilePath));
     }
 
-    if (!$secondJson = json_decode(file_get_contents($secondActualPath), true)) {
+    $secondContent = file_get_contents($secondActualPath);
+    if (!$secondContent || !$secondJson = json_decode($secondContent, true)) {
         throw new \Exception(sprintf(INVALID_FILE_MESSAGE, $secondFilePath));
     }
 
@@ -71,7 +73,10 @@ function genDiff($firstFilePath, $secondFilePath)
     print_r("}\n");
 }
 
-function valueToString($value): ?string
+/**
+ * @param mixed $value
+ */
+function valueToString($value): string
 {
     return is_string($value) ? $value : var_export($value, true);
 }

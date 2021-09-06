@@ -14,7 +14,9 @@ class DiffGeneratorTest extends TestCase
 {
     public function testGenDiff(): void
     {
-        $this->expectOutputString(file_get_contents(__DIR__.'/fixtures/result.txt'));
+        /** @var string $expectedString */
+        $expectedString = file_get_contents(__DIR__.'/fixtures/result.txt');
+        $this->expectOutputString($expectedString);
         genDiff(__DIR__.'/fixtures/file1.json', __DIR__.'/fixtures/file2.json');
     }
 
@@ -26,7 +28,7 @@ class DiffGeneratorTest extends TestCase
         genDiff(__DIR__.'/fixtures/file1.json', $invalidFilePath);
     }
 
-    public function testGenDiffInvalidPath():void
+    public function testGenDiffInvalidPath(): void
     {
         $invalidPath = sprintf('%s/fixtures/invalidPath.json', __DIR__);
 
