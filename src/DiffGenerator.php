@@ -28,7 +28,7 @@ function genDiff(string $firstFilePath, string $secondFilePath): void
     if (!$secondActualPath = actualizePath($secondFilePath)) {
         throw new \Exception(sprintf(INVALID_PATH_MESSAGE, $secondFilePath));
     }
-
+//test
     $firstContent = file_get_contents($firstActualPath);
     if (!$firstContent || !$firstJson = json_decode($firstContent, true)) {
         throw new \Exception(sprintf(INVALID_FILE_MESSAGE, $firstFilePath));
