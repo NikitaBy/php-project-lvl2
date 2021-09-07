@@ -17,6 +17,7 @@
         </include>
     </coverage>
     <php>
+        <includePath>.</includePath>
         <env name="XDEBUG_MODE" value="coverage"/>
         <ini name="xdebug.mode" value="coverage"/>
     </php>
