@@ -34,7 +34,7 @@
       "src/Parsers/YamlParser.php"
     ],
     "psr-4": {
-      "DiffGenerator\\Test": "tests"
+      "DiffGenerator\\Test\\": "tests"
     }
   }
 }
