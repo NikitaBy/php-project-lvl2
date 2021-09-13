@@ -2,30 +2,84 @@
 
 declare(strict_types=1);
 
+namespace DiffGenerator\Test;
+
 use PHPUnit\Framework\TestCase;
-use function DiffGenerator\DiffGenerator\genDiff;
-use const DiffGenerator\DiffGenerator\INVALID_FILE_MESSAGE;
-use const DiffGenerator\DiffGenerator\INVALID_PATH_MESSAGE;
+use function DiffGenerator\genDiff;
+use const DiffGenerator\INVALID_EXTENSION_MESSAGE;
+use const DiffGenerator\INVALID_FILE_MESSAGE;
+use const DiffGenerator\INVALID_PATH_MESSAGE;
 
 /**
  * Class DiffGeneratorTest
  */
 class DiffGeneratorTest extends TestCase
 {
-    public function testGenDiff(): void
+    public function dataProviderInvalid(): array
+    {
+        return [
+            [
+                __DIR__.'/fixtures/json/file1.json',
+                __DIR__.'/fixtures/json/invalidFile.json',
+            ],
+            [
+                __DIR__.'/fixtures/yaml/file1.yaml',
+                __DIR__.'/fixtures/yaml/invalidFile.yaml',
+            ],
+        ];
+    }
+
+    public function dataProviderValid(): array
+    {
+        return [
+            [
+                __DIR__.'/fixtures/json/file1.json',
+                __DIR__.'/fixtures/json/file2.json',
+            ],
+            [
+                __DIR__.'/fixtures/yaml/file1.yaml',
+                __DIR__.'/fixtures/yaml/file2.yml',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider dataProviderValid
+     *
+     * @param string $firstFilePath
+     * @param string $secondFilePath
+     */
+    public function testGenDiff(string $firstFilePath, string $secondFilePath): void
     {
         /** @var string $expectedString */
         $expectedString = file_get_contents(__DIR__.'/fixtures/result.txt');
         $this->expectOutputString($expectedString);
-        genDiff(__DIR__.'/fixtures/file1.json', __DIR__.'/fixtures/file2.json');
+
+        genDiff($firstFilePath, $secondFilePath);
     }
 
-    public function testGenDiffInvalidJson(): void
+    public function testGenDiffInvalidExtension(): void
     {
-        $invalidFilePath = sprintf('%s/fixtures/invalidFile.json', __DIR__);
+        $invalidExtensionFilePath = sprintf('%s/fixtures/invalidExtension.invld', __DIR__);
 
+        $this->expectExceptionMessage(
+            sprintf(INVALID_EXTENSION_MESSAGE, pathinfo($invalidExtensionFilePath, PATHINFO_EXTENSION))
+        );
+
+        genDiff($invalidExtensionFilePath, $invalidExtensionFilePath);
+    }
+
+    /**
+     * @dataProvider dataProviderInvalid
+     *
+     * @param string $firstFilePath
+     * @param string $invalidFilePath
+     */
+    public function testGenDiffInvalidFile(string $firstFilePath, string $invalidFilePath): void
+    {
         $this->expectExceptionMessage(sprintf(INVALID_FILE_MESSAGE, $invalidFilePath));
-        genDiff(__DIR__.'/fixtures/file1.json', $invalidFilePath);
+
+        genDiff($firstFilePath, $invalidFilePath);
     }
 
     public function testGenDiffInvalidPath(): void
@@ -33,6 +87,7 @@ class DiffGeneratorTest extends TestCase
         $invalidPath = sprintf('%s/fixtures/invalidPath.json', __DIR__);
 
         $this->expectExceptionMessage(sprintf(INVALID_PATH_MESSAGE, $invalidPath));
-        genDiff(__DIR__.'/fixtures/file1.json', $invalidPath);
+
+        genDiff($invalidPath, $invalidPath);
     }
 }
