@@ -10,6 +10,10 @@ const INVALID_FILE_MESSAGE = '"%s" is invalid.';
 const INVALID_PATH_MESSAGE = '"%s" doesn\'t exists.';
 
 /**
+ * @param string $content
+ * @param string $extension
+ *
+ * @return mixed[]|null
  * @throws \Exception
  */
 function parseContent(string $content, string $extension): ?array
@@ -37,6 +41,9 @@ function actualizePath(string $path): ?string
 }
 
 /**
+ * @param string $path
+ *
+ * @return mixed[]
  * @throws \Exception
  */
 function getContent(string $path): array

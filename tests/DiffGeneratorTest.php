@@ -15,6 +15,9 @@ use const DiffGenerator\INVALID_PATH_MESSAGE;
  */
 class DiffGeneratorTest extends TestCase
 {
+    /**
+     * @return string[][]
+     */
     public function dataProviderInvalid(): array
     {
         return [
@@ -29,6 +32,9 @@ class DiffGeneratorTest extends TestCase
         ];
     }
 
+    /**
+     * @return string[][]
+     */
     public function dataProviderValid(): array
     {
         return [
