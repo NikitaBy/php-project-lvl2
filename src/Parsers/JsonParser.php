@@ -7,7 +7,7 @@ namespace DiffGenerator\Parsers\JsonParser;
  *
  * @return mixed[]|null
  */
-function parse(string $content): ?array
+function parse(string $content)
 {
-    return json_decode($content, true);
+    return json_decode($content);
 }

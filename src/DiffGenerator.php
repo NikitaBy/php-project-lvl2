@@ -2,32 +2,10 @@
 
 namespace DiffGenerator;
 
-use function DiffGenerator\Parsers\JsonParser\parse as jsonParse;
-use function DiffGenerator\Parsers\YamlParser\parse as yamlParse;
+use function DiffGenerator\Parsers\ParserRegistry\getParserByFileExtension;
 
-const INVALID_EXTENSION_MESSAGE = 'Extension "%s" is invalid.';
 const INVALID_FILE_MESSAGE = '"%s" is invalid.';
 const INVALID_PATH_MESSAGE = '"%s" doesn\'t exists.';
-
-/**
- * @param string $content
- * @param string $extension
- *
- * @return mixed[]|null
- * @throws \Exception
- */
-function parseContent(string $content, string $extension): ?array
-{
-    switch ($extension) {
-        case ('json'):
-            return jsonParse($content);
-        case ('yaml'):
-        case ('yml'):
-            return yamlParse($content);
-        default:
-            throw new \Exception(sprintf(INVALID_EXTENSION_MESSAGE, $extension));
-    }
-}
 
 function actualizePath(string $path): ?string
 {
@@ -40,13 +18,7 @@ function actualizePath(string $path): ?string
     return file_exists($path) ? $path : null;
 }
 
-/**
- * @param string $path
- *
- * @return mixed[]
- * @throws \Exception
- */
-function getContent(string $path): array
+function getContent(string $path)
 {
     if (!$actualPath = actualizePath($path)) {
         throw new \Exception(sprintf(INVALID_PATH_MESSAGE, $path));
@@ -56,13 +28,18 @@ function getContent(string $path): array
         throw new \Exception(sprintf(INVALID_FILE_MESSAGE, $actualPath));
     }
 
-    $extension = pathinfo($actualPath, PATHINFO_EXTENSION);
+    $parser = getParserByFileExtension(pathinfo($actualPath, PATHINFO_EXTENSION));
 
-    if (!$parseContent = parseContent($content, $extension)) {
+    if (!$parseContent = $parser($content)) {
         throw new \Exception(sprintf(INVALID_FILE_MESSAGE, $actualPath));
     }
 
     return $parseContent;
+}
+
+function getExitingKeys($struct): array
+{
+    return array_merge(array_keys(get_object_vars($struct)));
 }
 
 /**
@@ -73,38 +50,68 @@ function genDiff(string $firstFilePath, string $secondFilePath): void
     $firstContent = getContent($firstFilePath);
     $secondContent = getContent($secondFilePath);
 
-    $result = [];
-    foreach (array_keys($firstContent) as $key) {
-        $result[$key] = [true, isset($secondContent[$key])];
-    }
+    printDiff($firstContent, $secondContent);
+}
 
-    foreach (array_diff_key($secondContent, $result) as $key => $value) {
-        $result[$key] = [false, true];
-    }
+function printDiff($firstContent, $secondContent)
+{
+    $firstKeys = getExitingKeys($firstContent);
+    $secondKeys = getExitingKeys($secondContent);
 
-    ksort($result);
+//    print_r("{\n");
 
-    print_r("{\n");
-    foreach ($result as $key => [$exists1, $exists2]) {
-        if ($exists1 && $exists2) {
-            $val1 = $firstContent[$key];
-            $val2 = $secondContent[$key];
+    foreach (array_unique(array_merge($firstKeys, $secondKeys)) as $key) {
+        $existsIn1 = in_array($key, $firstKeys);
+        $existsIn2 = in_array($key, $secondKeys);
 
-            if ($val1 === $val2) {
-                print_r(sprintf("    %s: %s\n", $key, valueToString($val1)));
+        if ($existsIn1 && $existsIn2) {
+            $val1 = $firstContent->$key;
+            $val2 = $secondContent->$key;
+
+            if (compareObjects($val1, $val2)) {
+                printObject($val1);
             } else {
                 print_r(sprintf("  - %s: %s\n", $key, valueToString($val1)));
                 print_r(sprintf("  + %s: %s\n", $key, valueToString($val2)));
             }
-        } elseif ($exists1) {
-            $val1 = $firstContent[$key];
+        } elseif ($existsIn1) {
+            $val1 = $firstContent->$key;
+
             print_r(sprintf("  - %s: %s\n", $key, valueToString($val1)));
         } else {
-            $val2 = $secondContent[$key];
+            $val2 = $secondContent->$key;
+
             print_r(sprintf("  + %s: %s\n", $key, valueToString($val2)));
         }
     }
-    print_r("}\n");
+
+//    print_r("}\n");
+}
+
+function compareObjects($object1, $object2): bool
+{
+    if (!is_object($object1) || !is_object($object2)) {
+        return $object1 === $object2;
+    }
+
+    $keys = getExitingKeys($object1);
+
+    if (array_diff($keys, getExitingKeys($object2))) {
+        return false;
+    }
+
+    foreach ($keys as $key) {
+        $val1 = $object1->$key;
+        $val2 = $object2->$key;
+
+        if (!is_object($val1) || !is_object($val2)) {
+            return $val1 === $val2;
+        }
+
+        return compareObjects($val1, $val2);
+    }
+
+    return true;
 }
 
 /**
@@ -112,5 +119,37 @@ function genDiff(string $firstFilePath, string $secondFilePath): void
  */
 function valueToString($value): string
 {
-    return is_string($value) ? $value : var_export($value, true);
+    switch (gettype($value)) {
+        case 'string':
+            return $value;
+        case 'object':
+            return objectToString($value);
+        case 'NULL':
+            return 'null';
+        default:
+            return var_export($value, true);
+    }
+}
+
+function objectToString(object $object): string
+{
+    $result = "{\n";
+    foreach (getExitingKeys($object) as $key) {
+        $result .= '    '.$key.': '.valueToString($object->$key)."\n";
+    }
+
+    $result .= "}";
+
+    return $result;
+}
+
+function printObject(object $object, int $depth = 0)
+{
+    print_r("{\n");
+
+    foreach (getExitingKeys($object) as $key) {
+        print_r(str_repeat(' ', $depth * 4 * 2).$key.':'.valueToString($object->$key)."\n");
+    }
+
+    print_r(str_repeat(' ', $depth * 4)."}\n");
 }

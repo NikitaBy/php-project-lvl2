@@ -29,8 +29,11 @@
   ],
   "autoload": {
     "files": [
+      "src/Formatter/FormatterRegistry.php",
+      "src/Formatter/StylishFormatter.php",
       "src/DiffGenerator.php",
       "src/Parsers/JsonParser.php",
+      "src/Parsers/ParserRegistry.php",
       "src/Parsers/YamlParser.php"
     ],
     "psr-4": {
