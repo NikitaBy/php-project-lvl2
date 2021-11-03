@@ -10,6 +10,11 @@ use function DiffGenerator\Formatter\StylishFormatter\formatDiff;
 
 const INVALID_FORMATTER_TYPE_MESSAGE = 'Formatter for type "%s" doesn\'t exits.';
 
+/**
+ * @param string $formatterType
+ *
+ * @return Closure
+ */
 function getFormatterByType(string $formatterType): Closure
 {
     switch ($formatterType) {

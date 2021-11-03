@@ -6,6 +6,11 @@ namespace DiffGenerator\Parsers\YamlParser;
 
 use Symfony\Component\Yaml\Yaml;
 
+/**
+ * @param string $content
+ *
+ * @return mixed|null
+ */
 function parse(string $content)
 {
     try {

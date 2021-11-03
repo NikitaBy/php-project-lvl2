@@ -31,7 +31,6 @@
     "files": [
       "src/DiffGenerator.php",
       "src/DiffHelper.php",
-      "src/Enum/PrintModeEnum.php",
       "src/Formatter/FormatterRegistry.php",
       "src/Formatter/StylishFormatter.php",
       "src/Parsers/JsonParser.php",
