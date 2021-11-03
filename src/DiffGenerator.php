@@ -3,6 +3,7 @@
 namespace DiffGenerator;
 
 use Exception;
+
 use function DiffGenerator\Formatter\FormatterRegistry\getFormatterByType;
 use function DiffGenerator\Parsers\ParserRegistry\getParserByFileExtension;
 use function DiffHelper\calculateDiff;

@@ -6,6 +6,7 @@ namespace DiffGenerator\Formatter\FormatterRegistry;
 
 use Closure;
 use RuntimeException;
+
 use function DiffGenerator\Formatter\StylishFormatter\formatDiff;
 
 const INVALID_FORMATTER_TYPE_MESSAGE = 'Formatter for type "%s" doesn\'t exits.';

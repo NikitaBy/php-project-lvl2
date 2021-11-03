@@ -2,11 +2,22 @@
 
 namespace DiffHelper;
 
-function getExitingKeys($struct): array
+/**
+ * @param object $struct
+ *
+ * @return array<int, string>
+ */
+function getExitingKeys(object $struct): array
 {
     return array_merge(array_keys(get_object_vars($struct)));
 }
 
+/**
+ * @param object $obj1
+ * @param object $obj2
+ *
+ * @return array<array>
+ */
 function calculateDiff(object $obj1, object $obj2): array
 {
     $keys = array_unique(array_merge(getExitingKeys($obj1), getExitingKeys($obj2)));
@@ -35,7 +46,7 @@ function valueToString($value): string
             return $value;
         case 'array':
         case 'object':
-            return json_encode($value);
+            return json_encode($value) ?: '';
         case 'NULL':
             return 'null';
         case 'boolean':

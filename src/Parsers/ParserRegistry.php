@@ -6,6 +6,7 @@ namespace DiffGenerator\Parsers\ParserRegistry;
 
 use Closure;
 use RuntimeException;
+
 use function DiffGenerator\Parsers\JsonParser\parse as jsonParse;
 use function DiffGenerator\Parsers\YamlParser\parse as yamlParse;
 

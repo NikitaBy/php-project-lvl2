@@ -50,7 +50,7 @@ function getRowRemove(int $depth, string $key, string $value): string
 }
 
 /**
- * @param array $diff
+ * @param array<array> $diff
  * @param int   $depth
  *
  * @return string
@@ -85,7 +85,7 @@ function formatDiff(array $diff, int $depth = 0): string
         $result .= getRowAdd($depth, $key, parseSingleValueToString($val2, $depth + 1));
     }
 
-    $result .= getOffset($depth)."}";
+    $result .= sprintf('%s}', getOffset($depth));
 
     if (!$depth) {
         $result .= "\n";
@@ -115,7 +115,7 @@ function parseSingleValueToString(string $value, int $depth = 0): string
         $result .= getRowEqual($depth, $key, parseSingleValueToString($value, $depth + 1));
     }
 
-    $result .= getOffset($depth).'}';
+    $result .= sprintf('%s}', getOffset($depth));
 
     return $result;
 }
