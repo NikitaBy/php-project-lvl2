@@ -6,7 +6,7 @@ namespace DiffGenerator\Formatter\FormatterRegistry;
 
 use Closure;
 use RuntimeException;
-use function DiffGenerator\Formatter\StylishFormatter\format as stylishFormat;
+use function DiffGenerator\Formatter\StylishFormatter\formatDiff;
 
 const INVALID_FORMATTER_TYPE_MESSAGE = 'Formatter for type "%s" doesn\'t exits.';
 
@@ -14,8 +14,8 @@ function getFormatterByType(string $formatterType): Closure
 {
     switch ($formatterType) {
         case 'stylish':
-            return function ($raw): string {
-                return stylishFormat($raw);
+            return function (array $diff): string {
+                return formatDiff($diff);
             };
         default:
             throw new RuntimeException(sprintf(INVALID_FORMATTER_TYPE_MESSAGE, $formatterType));

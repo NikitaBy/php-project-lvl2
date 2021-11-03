@@ -6,9 +6,9 @@ namespace DiffGenerator\Test;
 
 use PHPUnit\Framework\TestCase;
 use function DiffGenerator\genDiff;
-use const DiffGenerator\INVALID_EXTENSION_MESSAGE;
 use const DiffGenerator\INVALID_FILE_MESSAGE;
 use const DiffGenerator\INVALID_PATH_MESSAGE;
+use const DiffGenerator\Parsers\ParserRegistry\INVALID_EXTENSION_MESSAGE;
 
 /**
  * Class DiffGeneratorTest
