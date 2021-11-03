@@ -6,6 +6,7 @@ namespace DiffGenerator\Formatter\StylishFormatter;
 
 use function DiffHelper\calculateDiff;
 use function DiffHelper\valueToString;
+use function sprintf;
 
 const PREFIX_EQUALS = '    ';
 const PREFIX_ADD = '  + ';
@@ -21,7 +22,7 @@ const TAB = '    ';
  */
 function getRowEqual(int $depth, string $key, string $value): string
 {
-    return getOffset($depth).PREFIX_EQUALS.$key.': '.$value."\n";
+    return sprintf("%s%s%s: %s\n", getOffset($depth), PREFIX_EQUALS, $key, $value);
 }
 
 /**
@@ -33,7 +34,7 @@ function getRowEqual(int $depth, string $key, string $value): string
  */
 function getRowAdd(int $depth, string $key, string $value): string
 {
-    return getOffset($depth).PREFIX_ADD.$key.': '.$value."\n";
+    return sprintf("%s%s%s: %s\n", getOffset($depth), PREFIX_ADD, $key, $value);
 }
 
 /**
@@ -45,7 +46,7 @@ function getRowAdd(int $depth, string $key, string $value): string
  */
 function getRowRemove(int $depth, string $key, string $value): string
 {
-    return getOffset($depth).PREFIX_REMOVE.$key.': '.$value."\n";
+    return sprintf("%s%s%s: %s\n", getOffset($depth), PREFIX_REMOVE, $key, $value);
 }
 
 /**
