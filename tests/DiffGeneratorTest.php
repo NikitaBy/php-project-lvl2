@@ -6,6 +6,7 @@ namespace DiffGenerator\Test;
 
 use PHPUnit\Framework\TestCase;
 use function DiffGenerator\genDiff;
+use const DiffGenerator\Formatter\FormatterRegistry\INVALID_FORMATTER_TYPE_MESSAGE;
 use const DiffGenerator\INVALID_FILE_MESSAGE;
 use const DiffGenerator\INVALID_PATH_MESSAGE;
 use const DiffGenerator\Parsers\ParserRegistry\INVALID_EXTENSION_MESSAGE;
@@ -39,12 +40,24 @@ class DiffGeneratorTest extends TestCase
     {
         return [
             [
-                __DIR__.'/fixtures/json/file1.json',
-                __DIR__.'/fixtures/json/file2.json',
+                sprintf('%s/fixtures/json/file1.json', __DIR__),
+                sprintf('%s/fixtures/json/file2.json', __DIR__),
+                'stylish',
             ],
             [
-                __DIR__.'/fixtures/yaml/file1.yaml',
-                __DIR__.'/fixtures/yaml/file2.yml',
+                sprintf('%s/fixtures/yaml/file1.yaml', __DIR__),
+                sprintf('%s/fixtures/yaml/file2.yml', __DIR__),
+                'stylish',
+            ],
+            [
+                sprintf('%s/fixtures/json/file1.json', __DIR__),
+                sprintf('%s/fixtures/json/file2.json', __DIR__),
+                'plain',
+            ],
+            [
+                sprintf('%s/fixtures/yaml/file1.yaml', __DIR__),
+                sprintf('%s/fixtures/yaml/file2.yml', __DIR__),
+                'plain',
             ],
         ];
     }
@@ -54,14 +67,15 @@ class DiffGeneratorTest extends TestCase
      *
      * @param string $firstFilePath
      * @param string $secondFilePath
+     * @param string $formatterType
      */
-    public function testGenDiff(string $firstFilePath, string $secondFilePath): void
+    public function testGenDiff(string $firstFilePath, string $secondFilePath, string $formatterType): void
     {
         /** @var string $expectedString */
-        $expectedString = file_get_contents(__DIR__.'/fixtures/result.txt');
+        $expectedString = file_get_contents(sprintf('%s/fixtures/results/result_%s.txt', __DIR__, $formatterType));
         $this->expectOutputString($expectedString);
 
-        genDiff($firstFilePath, $secondFilePath);
+        genDiff($firstFilePath, $secondFilePath, $formatterType);
     }
 
     public function testGenDiffInvalidExtension(): void
@@ -86,6 +100,16 @@ class DiffGeneratorTest extends TestCase
         $this->expectExceptionMessage(sprintf(INVALID_FILE_MESSAGE, $invalidFilePath));
 
         genDiff($firstFilePath, $invalidFilePath);
+    }
+
+    public function testGenDiffInvalidFormatterType()
+    {
+        $invalidFormatterType = 'fake';
+
+        $this->expectExceptionMessage(sprintf(INVALID_FORMATTER_TYPE_MESSAGE, $invalidFormatterType));
+
+        $filePath = sprintf('%s/fixtures/json/file1.json', __DIR__);
+        genDiff($filePath, $filePath, $invalidFormatterType);
     }
 
     public function testGenDiffInvalidPath(): void
