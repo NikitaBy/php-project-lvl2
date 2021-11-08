@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace DiffGenerator\Formatter\Stylish\StylishFormatter;
 
+use Exception;
+
 use function DiffHelper\calculateDiff;
 use function sprintf;
 
@@ -98,6 +100,7 @@ function formatDiff(array $diff, int $depth = 0): string
  * @param int    $depth
  *
  * @return string
+ * @throws Exception
  */
 function parseSingleValueToString(string $value, int $depth = 0): string
 {
@@ -110,6 +113,11 @@ function parseSingleValueToString(string $value, int $depth = 0): string
 
             foreach ($decodedValue as $key => $value) {
                 $value = json_encode($value);
+
+                if ($value === false) {
+                    throw new Exception();
+                }
+
                 $result .= getRowEqual($depth, $key, parseSingleValueToString($value, $depth + 1));
             }
 

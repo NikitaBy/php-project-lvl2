@@ -12,6 +12,12 @@ const ROW_UPDATE = "Property '%s' was updated. From %s to %s\n";
 
 const COMPLEX_VALUE_PLACEHOLDER = '[complex value]';
 
+/**
+ * @param array<array>  $diff
+ * @param string $propertyPath
+ *
+ * @return string
+ */
 function formatDiff(array $diff, string $propertyPath = ''): string
 {
     $result = '';
@@ -46,12 +52,12 @@ function formatDiff(array $diff, string $propertyPath = ''): string
 }
 
 /**
- * @param $key
- * @param $val2
+ * @param string $key
+ * @param string $val2
  *
  * @return string
  */
-function getRowAdd($key, $val2): string
+function getRowAdd(string $key, string $val2): string
 {
     return sprintf(ROW_ADD, $key, parseSingleValueToString($val2));
 }
@@ -69,11 +75,11 @@ function getRowUpdate(string $key, string $oldValue, string $newValue): string
 }
 
 /**
- * @param $key
+ * @param string $key
  *
  * @return string
  */
-function getRowRemove($key): string
+function getRowRemove(string $key): string
 {
     return sprintf(ROW_REMOVE, $key);
 }

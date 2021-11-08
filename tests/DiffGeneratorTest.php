@@ -78,6 +78,9 @@ class DiffGeneratorTest extends TestCase
         genDiff($firstFilePath, $secondFilePath, $formatterType);
     }
 
+    /**
+     * @return void
+     */
     public function testGenDiffInvalidExtension(): void
     {
         $invalidExtensionFilePath = sprintf('%s/fixtures/invalidExtension.invld', __DIR__);
@@ -102,7 +105,10 @@ class DiffGeneratorTest extends TestCase
         genDiff($firstFilePath, $invalidFilePath);
     }
 
-    public function testGenDiffInvalidFormatterType()
+    /**
+     * @return void
+     */
+    public function testGenDiffInvalidFormatterType(): void
     {
         $invalidFormatterType = 'fake';
 
