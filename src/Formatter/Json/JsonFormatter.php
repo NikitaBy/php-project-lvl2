@@ -11,6 +11,11 @@ const TYPE_REMOVED = 'removed';
 const TYPE_UNCHANGED = 'unchanged';
 const TYPE_UPDATED = 'updated';
 
+/**
+ * @param array<array> $diff
+ *
+ * @return string
+ */
 function formatDiff(array $diff): string
 {
     $result = formatToArray($diff);
@@ -19,7 +24,7 @@ function formatDiff(array $diff): string
 }
 
 /**
- * @param array $diff
+ * @param array<array> $diff
  *
  * @return mixed
  */
@@ -62,13 +67,22 @@ function formatToArray(array $diff)
     );
 }
 
+/**
+ * @param mixed $value
+ *
+ * @return mixed
+ */
 function parseValue($value)
 {
-    $value = json_decode($value, true);
-
-    return $value;
+    return json_decode($value, true);
 }
 
+/**
+ * @param string $key
+ * @param mixed  $value
+ *
+ * @return mixed[]
+ */
 function getStructureAdded(string $key, $value): array
 {
     return [
@@ -78,6 +92,12 @@ function getStructureAdded(string $key, $value): array
     ];
 }
 
+/**
+ * @param string $key
+ * @param mixed  $value
+ *
+ * @return mixed[]
+ */
 function getStructureRemoved(string $key, $value): array
 {
     return [
@@ -87,6 +107,12 @@ function getStructureRemoved(string $key, $value): array
     ];
 }
 
+/**
+ * @param string $key
+ * @param mixed  $value
+ *
+ * @return mixed[]
+ */
 function getStructureUnchanged(string $key, $value): array
 {
     return [
@@ -96,6 +122,13 @@ function getStructureUnchanged(string $key, $value): array
     ];
 }
 
+/**
+ * @param string $key
+ * @param mixed  $oldValue
+ * @param mixed  $newValue
+ *
+ * @return mixed[]
+ */
 function getStructureUpdated(string $key, $oldValue, $newValue): array
 {
     return [
