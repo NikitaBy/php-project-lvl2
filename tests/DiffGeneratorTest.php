@@ -59,6 +59,16 @@ class DiffGeneratorTest extends TestCase
                 sprintf('%s/fixtures/yaml/file2.yml', __DIR__),
                 'plain',
             ],
+            [
+                sprintf('%s/fixtures/json/file1.json', __DIR__),
+                sprintf('%s/fixtures/json/file2.json', __DIR__),
+                'json',
+            ],
+            [
+                sprintf('%s/fixtures/yaml/file1.yaml', __DIR__),
+                sprintf('%s/fixtures/yaml/file2.yml', __DIR__),
+                'json',
+            ],
         ];
     }
 

@@ -32,6 +32,7 @@
       "src/DiffGenerator.php",
       "src/DiffHelper.php",
       "src/Formatter/FormatterRegistry.php",
+      "src/Formatter/Json/JsonFormatter.php",
       "src/Formatter/Plain/PlainFormatter.php",
       "src/Formatter/Stylish/StylishFormatter.php",
       "src/Parsers/JsonParser.php",

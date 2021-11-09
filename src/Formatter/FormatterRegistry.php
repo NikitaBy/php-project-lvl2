@@ -7,6 +7,7 @@ namespace DiffGenerator\Formatter\FormatterRegistry;
 use Closure;
 use RuntimeException;
 
+use function DiffGenerator\Formatter\Json\JsonFormatter\formatDiff as jsonFormatter;
 use function DiffGenerator\Formatter\Plain\PlainFormatter\formatDiff as plainFormatter;
 use function DiffGenerator\Formatter\Stylish\StylishFormatter\formatDiff as stylishFormatter;
 
@@ -27,6 +28,10 @@ function getFormatterByType(string $formatterType): Closure
         case 'plain':
             return function (array $diff): string {
                 return plainFormatter($diff);
+            };
+        case 'json':
+            return function (array $diff): string {
+                return jsonFormatter($diff);
             };
         default:
             throw new RuntimeException(sprintf(INVALID_FORMATTER_TYPE_MESSAGE, $formatterType));
