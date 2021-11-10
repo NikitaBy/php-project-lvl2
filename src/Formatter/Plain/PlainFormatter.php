@@ -13,8 +13,8 @@ const ROW_UPDATE = "Property '%s' was updated. From %s to %s\n";
 const COMPLEX_VALUE_PLACEHOLDER = '[complex value]';
 
 /**
- * @param array<array>  $diff
- * @param string $propertyPath
+ * @param array<array> $diff
+ * @param string       $propertyPath
  *
  * @return string
  */
@@ -48,7 +48,7 @@ function formatDiff(array $diff, string $propertyPath = ''): string
         $result .= getRowUpdate($currentPath, $val1, $val2);
     }
 
-    return $result;
+    return $propertyPath ? $result: rtrim($result);
 }
 
 /**

@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace Differ\Test;
 
 use PHPUnit\Framework\TestCase;
-
 use function Differ\Differ\genDiff;
-
 use const Differ\Differ\INVALID_FILE_MESSAGE;
 use const Differ\Differ\INVALID_PATH_MESSAGE;
 use const Differ\Formatter\FormatterRegistry\INVALID_FORMATTER_TYPE_MESSAGE;
@@ -83,11 +81,10 @@ class DifferTest extends TestCase
      */
     public function testGenDiff(string $firstFilePath, string $secondFilePath, string $formatterType): void
     {
-        /** @var string $expectedString */
-        $expectedString = file_get_contents(sprintf('%s/fixtures/results/result_%s.txt', __DIR__, $formatterType));
-        $this->expectOutputString($expectedString);
-
-        genDiff($firstFilePath, $secondFilePath, $formatterType);
+        $this->assertStringEqualsFile(
+            sprintf('%s/fixtures/results/result_%s.txt', __DIR__, $formatterType),
+            sprintf("%s\n", genDiff($firstFilePath, $secondFilePath, $formatterType))
+        );
     }
 
     /**

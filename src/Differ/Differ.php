@@ -68,9 +68,6 @@ function genDiff(string $firstFilePath, string $secondFilePath, string $formatte
     $diff = calculateDiff($firstContent, $secondContent);
 
     $formatter = getFormatterByType($formatterType);
-    $formattedDiff = $formatter($diff);
 
-    print_r($formattedDiff);
-
-    return $formattedDiff;
+    return $formatter($diff);
 }

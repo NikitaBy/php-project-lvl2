@@ -88,10 +88,6 @@ function formatDiff(array $diff, int $depth = 0): string
 
     $result .= sprintf('%s}', getOffset($depth));
 
-    if (!$depth) {
-        $result .= "\n";
-    }
-
     return $result;
 }
 

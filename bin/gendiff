@@ -34,5 +34,6 @@ $secondFilePath = $args['<secondFile>'] ?? null;
 $format = $args['--format'] ?? 'stylish';
 
 if ($firstFilePath && $secondFilePath) {
-    genDiff($firstFilePath, $secondFilePath, $format);
+    $output = genDiff($firstFilePath, $secondFilePath, $format);
+    print_r(sprintf("%s\n", $output));
 }
