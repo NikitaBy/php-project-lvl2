@@ -57,8 +57,10 @@ function getContent(string $path)
  * @param string $firstFilePath
  * @param string $secondFilePath
  * @param string $formatterType
+ *
+ * @return string
  */
-function genDiff(string $firstFilePath, string $secondFilePath, string $formatterType = 'stylish'): void
+function genDiff(string $firstFilePath, string $secondFilePath, string $formatterType = 'stylish'): string
 {
     $firstContent = getContent($firstFilePath);
     $secondContent = getContent($secondFilePath);
@@ -69,4 +71,6 @@ function genDiff(string $firstFilePath, string $secondFilePath, string $formatte
     $formattedDiff = $formatter($diff);
 
     print_r($formattedDiff);
+
+    return $formattedDiff;
 }
