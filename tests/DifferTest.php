@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace DiffGenerator\Test;
+namespace Differ\Test;
 
 use PHPUnit\Framework\TestCase;
-use function DiffGenerator\genDiff;
-use const DiffGenerator\Formatter\FormatterRegistry\INVALID_FORMATTER_TYPE_MESSAGE;
-use const DiffGenerator\INVALID_FILE_MESSAGE;
-use const DiffGenerator\INVALID_PATH_MESSAGE;
-use const DiffGenerator\Parsers\ParserRegistry\INVALID_EXTENSION_MESSAGE;
+use function Differ\genDiff;
+use const Differ\Formatter\FormatterRegistry\INVALID_FORMATTER_TYPE_MESSAGE;
+use const Differ\INVALID_FILE_MESSAGE;
+use const Differ\INVALID_PATH_MESSAGE;
+use const Differ\Parsers\ParserRegistry\INVALID_EXTENSION_MESSAGE;
 
 /**
  * Class DiffGeneratorTest
  */
-class DiffGeneratorTest extends TestCase
+class DifferTest extends TestCase
 {
     /**
      * @return string[][]

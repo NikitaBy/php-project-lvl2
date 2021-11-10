@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace DiffGenerator\Parsers\ParserRegistry;
+namespace Differ\Parsers\ParserRegistry;
 
 use Closure;
 use RuntimeException;
 
-use function DiffGenerator\Parsers\JsonParser\parse as jsonParse;
-use function DiffGenerator\Parsers\YamlParser\parse as yamlParse;
+use function Differ\Parsers\JsonParser\parse as jsonParse;
+use function Differ\Parsers\YamlParser\parse as yamlParse;
 
 const INVALID_EXTENSION_MESSAGE = 'Extension "%s" is invalid.';
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DiffGenerator\Formatter\Plain\PlainFormatter;
+namespace Differ\Formatter\Plain\PlainFormatter;
 
 use function DiffHelper\calculateDiff;
 

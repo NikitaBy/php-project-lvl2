@@ -1,6 +1,6 @@
 <?php
 
-namespace DiffGenerator\Parsers\JsonParser;
+namespace Differ\Parsers\JsonParser;
 
 /**
  * @param string $content

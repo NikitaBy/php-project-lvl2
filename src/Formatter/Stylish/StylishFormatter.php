@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DiffGenerator\Formatter\Stylish\StylishFormatter;
+namespace Differ\Formatter\Stylish\StylishFormatter;
 
 use Exception;
 

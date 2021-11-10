@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DiffGenerator\Formatter\Json\JsonFormatter;
+namespace Differ\Formatter\Json\JsonFormatter;
 
 use function DiffHelper\calculateDiff;
 

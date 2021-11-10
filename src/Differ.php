@@ -1,11 +1,11 @@
 <?php
 
-namespace DiffGenerator;
+namespace Differ;
 
 use Exception;
 
-use function DiffGenerator\Formatter\FormatterRegistry\getFormatterByType;
-use function DiffGenerator\Parsers\ParserRegistry\getParserByFileExtension;
+use function Differ\Formatter\FormatterRegistry\getFormatterByType;
+use function Differ\Parsers\ParserRegistry\getParserByFileExtension;
 use function DiffHelper\calculateDiff;
 
 const INVALID_FILE_MESSAGE = '"%s" is invalid.';

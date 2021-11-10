@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace DiffGenerator\Parsers\YamlParser;
+namespace Differ\Parsers\YamlParser;
 
 use Symfony\Component\Yaml\Yaml;
 
