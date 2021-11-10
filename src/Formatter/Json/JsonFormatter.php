@@ -124,12 +124,12 @@ function getStructureUnchanged(string $key, $value): array
 }
 
 /**
- * @param string $key
- * @param        $value
+ * @param string       $key
+ * @param array<array> $value
  *
- * @return array
+ * @return array<mixed>
  */
-function getStructureRoot(string $key, $value): array
+function getStructureRoot(string $key, array $value): array
 {
     return [
         'name'  => $key,
