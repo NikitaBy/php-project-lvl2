@@ -21,7 +21,7 @@ function formatDiff(array $diff): string
 {
     $result = formatToArray($diff);
 
-    return json_encode($result);
+    return (string) json_encode($result);
 }
 
 /**

@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Differ\Test;
 
 use PHPUnit\Framework\TestCase;
+
 use function Differ\Differ\genDiff;
+
 use const Differ\Differ\INVALID_FILE_MESSAGE;
 use const Differ\Differ\INVALID_PATH_MESSAGE;
 use const Differ\Formatter\FormatterRegistry\INVALID_FORMATTER_TYPE_MESSAGE;
@@ -23,12 +25,12 @@ class DifferTest extends TestCase
     {
         return [
             [
-                __DIR__.'/fixtures/json/file1.json',
-                __DIR__.'/fixtures/json/invalidFile.json',
+                __DIR__ . '/fixtures/json/file1.json',
+                __DIR__ . '/fixtures/json/invalidFile.json',
             ],
             [
-                __DIR__.'/fixtures/yaml/file1.yaml',
-                __DIR__.'/fixtures/yaml/invalidFile.yaml',
+                __DIR__ . '/fixtures/yaml/file1.yaml',
+                __DIR__ . '/fixtures/yaml/invalidFile.yaml',
             ],
         ];
     }
