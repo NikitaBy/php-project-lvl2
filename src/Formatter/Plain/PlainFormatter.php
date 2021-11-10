@@ -48,7 +48,7 @@ function formatDiff(array $diff, string $propertyPath = ''): string
         $result .= getRowUpdate($currentPath, $val1, $val2);
     }
 
-    return $propertyPath ? $result: rtrim($result);
+    return $propertyPath ? $result : rtrim($result);
 }
 
 /**
