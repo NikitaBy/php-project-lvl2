@@ -29,7 +29,7 @@
   ],
   "autoload": {
     "files": [
-      "src/Differ.php",
+      "src/Differ/Differ.php",
       "src/DiffHelper.php",
       "src/Formatter/FormatterRegistry.php",
       "src/Formatter/Json/JsonFormatter.php",
@@ -40,6 +40,7 @@
       "src/Parsers/YamlParser.php"
     ],
     "psr-4": {
+      "Differ\\": "src",
       "Differ\\Test\\": "tests"
     }
   }

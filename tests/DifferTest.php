@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Differ\Test;
 
 use PHPUnit\Framework\TestCase;
-use function Differ\genDiff;
+
+use function Differ\Differ\genDiff;
+
+use const Differ\Differ\INVALID_FILE_MESSAGE;
+use const Differ\Differ\INVALID_PATH_MESSAGE;
 use const Differ\Formatter\FormatterRegistry\INVALID_FORMATTER_TYPE_MESSAGE;
-use const Differ\INVALID_FILE_MESSAGE;
-use const Differ\INVALID_PATH_MESSAGE;
 use const Differ\Parsers\ParserRegistry\INVALID_EXTENSION_MESSAGE;
 
 /**
