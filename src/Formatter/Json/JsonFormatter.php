@@ -8,6 +8,7 @@ use function DiffHelper\calculateDiff;
 
 const TYPE_ADDED = 'added';
 const TYPE_REMOVED = 'removed';
+const TYPE_ROOT = 'root';
 const TYPE_UNCHANGED = 'unchanged';
 const TYPE_UPDATED = 'updated';
 
@@ -54,7 +55,7 @@ function formatToArray(array $diff)
             }
 
             if (is_object($obj1 = json_decode($val1)) && is_object($obj2 = json_decode($val2))) {
-                $acc[] = getStructureUnchanged($key, formatToArray(calculateDiff($obj1, $obj2)));
+                $acc[] = getStructureRoot($key, formatToArray(calculateDiff($obj1, $obj2)));
 
                 return $acc;
             }
@@ -118,7 +119,22 @@ function getStructureUnchanged(string $key, $value): array
     return [
         'name'  => $key,
         'type'  => TYPE_UNCHANGED,
-        'value' => is_array($value) ? $value : parseValue($value),
+        'value' => parseValue($value),
+    ];
+}
+
+/**
+ * @param string $key
+ * @param        $value
+ *
+ * @return array
+ */
+function getStructureRoot(string $key, $value): array
+{
+    return [
+        'name'  => $key,
+        'type'  => TYPE_ROOT,
+        'value' => $value,
     ];
 }
 
