@@ -28,9 +28,8 @@ function calculateDiff(object $obj1, object $obj2): array
         function ($diff, $key) use ($obj1, $obj2) {
             $val1 = property_exists($obj1, $key) ? json_encode($obj1->$key) : null;
             $val2 = property_exists($obj2, $key) ? json_encode($obj2->$key) : null;
-            $diff[$key] = [$val1, $val2];
 
-            return $diff;
+            return array_merge($diff, [$key => [$val1, $val2]]);
         },
         []
     );
