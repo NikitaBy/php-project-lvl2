@@ -37,32 +37,22 @@ function formatToArray(array $diff)
             [$val1, $val2] = $diff[$key];
 
             if ($val1 === $val2) {
-                $acc[] = getStructureUnchanged($key, $val1);
-
-                return $acc;
+                return array_merge($acc, [getStructureUnchanged($key, $val1)]);
             }
 
             if (is_null($val1)) {
-                $acc[] = getStructureAdded($key, $val2);
-
-                return $acc;
+                return array_merge($acc, [getStructureAdded($key, $val2)]);
             }
 
             if (is_null($val2)) {
-                $acc[] = getStructureRemoved($key, $val1);
-
-                return $acc;
+                return array_merge($acc, [getStructureRemoved($key, $val1)]);
             }
 
             if (is_object($obj1 = json_decode($val1)) && is_object($obj2 = json_decode($val2))) {
-                $acc[] = getStructureRoot($key, formatToArray(calculateDiff($obj1, $obj2)));
-
-                return $acc;
+                return array_merge($acc, [getStructureRoot($key, formatToArray(calculateDiff($obj1, $obj2)))]);
             }
 
-            $acc[] = getStructureUpdated($key, $val1, $val2);
-
-            return $acc;
+            return array_merge($acc, [getStructureUpdated($key, $val1, $val2)]);
         },
         []
     );
