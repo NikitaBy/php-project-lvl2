@@ -20,33 +20,35 @@ const COMPLEX_VALUE_PLACEHOLDER = '[complex value]';
  */
 function formatDiff(array $diff, string $propertyPath = ''): string
 {
-    $result = '';
+    $result = array_reduce(
+        array_keys($diff),
+        function ($result, $key) use ($diff, $propertyPath) {
+            [$val1, $val2] = $diff[$key];
 
-    foreach ($diff as $key => [$val1, $val2]) {
-        $currentPath = $propertyPath ? sprintf('%s.%s', $propertyPath, $key) : $key;
+            $currentPath = $propertyPath ? sprintf('%s.%s', $propertyPath, $key) : $key;
 
-        if ($val1 === $val2) {
-            continue;
-        }
+            if ($val1 === $val2) {
+                return $result;
+            }
 
-        if (is_null($val2)) {
-            $result .= getRowRemove($currentPath);
-            continue;
-        }
+            if (is_null($val2)) {
+                return sprintf('%s%s', $result, getRowRemove($currentPath));
+            }
 
-        if (is_null($val1)) {
-            $result .= getRowAdd($currentPath, $val2);
-            continue;
-        }
+            if (is_null($val1)) {
+                return sprintf('%s%s', $result, getRowAdd($currentPath, $val2));
+            }
 
-        if (is_object($obj1 = json_decode($val1)) && is_object($obj2 = json_decode($val2))) {
-            $innerDiff = calculateDiff($obj1, $obj2);
-            $result .= formatDiff($innerDiff, $currentPath);
-            continue;
-        }
+            if (is_object($obj1 = json_decode($val1)) && is_object($obj2 = json_decode($val2))) {
+                $innerDiff = calculateDiff($obj1, $obj2);
 
-        $result .= getRowUpdate($currentPath, $val1, $val2);
-    }
+                return sprintf('%s%s', $result, formatDiff($innerDiff, $currentPath));
+            }
+
+            return sprintf('%s%s', $result, getRowUpdate($currentPath, $val1, $val2));
+        },
+        ''
+    );
 
     return $propertyPath ? $result : rtrim($result);
 }
