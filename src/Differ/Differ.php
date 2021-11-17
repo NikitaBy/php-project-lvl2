@@ -36,11 +36,11 @@ function actualizePath(string $path): ?string
  */
 function getContent(string $path)
 {
-    if (!is_null($actualPath = actualizePath($path))) {
+    if (is_null($actualPath = actualizePath($path))) {
         throw new Exception(sprintf(INVALID_PATH_MESSAGE, $path));
     }
 
-    if (!is_null($content = file_get_contents($actualPath))) {
+    if (is_null($content = file_get_contents($actualPath))) {
         throw new Exception(sprintf(INVALID_FILE_MESSAGE, $actualPath));
     }
 
