@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Differ\Formatter\Stylish\StylishFormatter;
 
 use Exception;
+
 use function DiffHelper\calculateDiff;
 use function sprintf;
 
