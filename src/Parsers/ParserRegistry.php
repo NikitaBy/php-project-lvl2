@@ -21,7 +21,7 @@ function getParserByFileExtension(string $extension): Closure
 {
     switch ($extension) {
         case 'json':
-            return function (string $content): ?array {
+            return function (string $content) {
                 return jsonParse($content);
             };
         case 'yaml':
