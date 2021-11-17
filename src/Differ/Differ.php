@@ -3,7 +3,6 @@
 namespace Differ\Differ;
 
 use Exception;
-
 use function Differ\Formatter\FormatterRegistry\getFormatterByType;
 use function Differ\Parsers\ParserRegistry\getParserByFileExtension;
 use function DiffHelper\calculateDiff;
@@ -22,9 +21,9 @@ function actualizePath(string $path): ?string
         return $path;
     }
 
-    $path = sprintf('%s/../%s', __DIR__, $path);
+    $actualPath = sprintf('%s/../%s', __DIR__, $path);
 
-    return file_exists($path) ? $path : null;
+    return file_exists($actualPath) ? $actualPath : null;
 }
 
 /**
@@ -36,11 +35,11 @@ function actualizePath(string $path): ?string
  */
 function getContent(string $path)
 {
-    if (!$actualPath = actualizePath($path)) {
+    if (!is_null($actualPath = actualizePath($path))) {
         throw new Exception(sprintf(INVALID_PATH_MESSAGE, $path));
     }
 
-    if (!$content = file_get_contents($actualPath)) {
+    if (!is_null($content = file_get_contents($actualPath))) {
         throw new Exception(sprintf(INVALID_FILE_MESSAGE, $actualPath));
     }
 

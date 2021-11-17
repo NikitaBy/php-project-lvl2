@@ -6,7 +6,6 @@ namespace Differ\Parsers\ParserRegistry;
 
 use Closure;
 use RuntimeException;
-
 use function Differ\Parsers\JsonParser\parse as jsonParse;
 use function Differ\Parsers\YamlParser\parse as yamlParse;
 
@@ -21,7 +20,7 @@ function getParserByFileExtension(string $extension): Closure
 {
     switch ($extension) {
         case 'json':
-            return function (string $content) {
+            return function (string $content): ?array {
                 return jsonParse($content);
             };
         case 'yaml':
