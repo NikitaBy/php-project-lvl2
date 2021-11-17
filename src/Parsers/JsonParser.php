@@ -5,7 +5,7 @@ namespace Differ\Parsers\JsonParser;
 /**
  * @param string $content
  *
- * @return mixed[]|null
+ * @return mixed|null
  */
 function parse(string $content)
 {
