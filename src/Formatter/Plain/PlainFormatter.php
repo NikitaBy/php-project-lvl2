@@ -25,7 +25,7 @@ function formatDiff(array $diff, string $propertyPath = ''): string
         function ($result, $key) use ($diff, $propertyPath) {
             [$val1, $val2] = $diff[$key];
 
-            $currentPath = $propertyPath ? sprintf('%s.%s', $propertyPath, $key) : $key;
+            $currentPath = empty($propertyPath) ? $key : sprintf('%s.%s', $propertyPath, $key);
 
             if ($val1 === $val2) {
                 return $result;
@@ -50,7 +50,7 @@ function formatDiff(array $diff, string $propertyPath = ''): string
         ''
     );
 
-    return $propertyPath ? $result : rtrim($result);
+    return empty($propertyPath) ? rtrim($result) : $result;
 }
 
 /**
@@ -98,7 +98,7 @@ function parseSingleValueToString(string $value): string
         case 'NULL':
             return 'null';
         case 'boolean':
-            return $decodedValue ? 'true' : 'false';
+            return is_bool($decodedValue) && $decodedValue ? 'true' : 'false';
         default:
             return (string) $decodedValue;
     }
