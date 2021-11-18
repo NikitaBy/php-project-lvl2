@@ -21,10 +21,11 @@ function getExitingKeys(object $struct): array
 function calculateDiff(object $obj1, object $obj2): array
 {
     $keys = array_unique(array_merge(getExitingKeys($obj1), getExitingKeys($obj2)));
-    natsort($keys);
+//    natsort($keys);
+    $sortedKey = collect($keys)->sort(SORT_NATURAL)->toArray();
 
     return array_reduce(
-        $keys,
+        $sortedKey,
         function ($diff, $key) use ($obj1, $obj2) {
             $val1 = property_exists($obj1, $key) ? json_encode($obj1->$key) : null;
             $val2 = property_exists($obj2, $key) ? json_encode($obj2->$key) : null;

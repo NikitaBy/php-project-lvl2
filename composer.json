@@ -15,7 +15,8 @@
     "docopt/docopt": "^1.0",
     "ext-json": "*",
     "phpstan/phpstan": "^0.12.98",
-    "symfony/yaml": "^5.3"
+    "symfony/yaml": "^5.3",
+    "tightenco/collect": "^8.34"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
