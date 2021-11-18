@@ -21,7 +21,6 @@ function getExitingKeys(object $struct): array
 function calculateDiff(object $obj1, object $obj2): array
 {
     $keys = array_unique(array_merge(getExitingKeys($obj1), getExitingKeys($obj2)));
-//    natsort($keys);
     $sortedKey = collect($keys)->sort(SORT_NATURAL)->toArray();
 
     return array_reduce(
